@@ -62,13 +62,20 @@
   /* Card: Standard white card with subtle hover */
   .card {
     @apply bg-white border border-sand-3 rounded-2xl
-           transition-shadow duration-300
+           transition-all duration-300
            hover:shadow-lg hover:shadow-teal/5;
   }
 
   /* Glass panel: Frosted glass effect for overlays */
   .glass {
     @apply bg-white/70 backdrop-blur-xl border border-white/20;
+  }
+
+  /* FAQ details/summary: Accessible accordion */
+  details summary::-webkit-details-marker { display: none; }
+  details[open] summary { @apply text-teal-2; }
+  details > div {
+    animation: fadeIn 0.2s ease-out forwards;
   }
 }
 
