@@ -1,12 +1,12 @@
 import Sidebar from '@/components/Sidebar'
-import ChatPage from '@/components/chat/ChatPage'
+import HomePage from '@/components/HomePage'
 
 export default function Home() {
   return (
     <div className="flex h-screen overflow-hidden">
       <Sidebar />
-      <main className="flex-1 flex flex-col overflow-hidden">
-        <ChatPage />
+      <main className="flex-1 overflow-y-auto bg-sand">
+        <HomePage />
       </main>
     </div>
   )

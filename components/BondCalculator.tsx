@@ -2,6 +2,13 @@
 'use client'
 import { useState } from 'react'
 import type { BondResult } from '@/lib/types'
+import { CalendarIcon, BanknoteIcon } from '@/components/ui/Icons'
+import PageFooter from '@/components/ui/PageFooter'
+
+const BOND_ICONS: Record<string, React.ReactNode> = {
+  calendar: <CalendarIcon size={16} className="text-teal-md" />,
+  banknote: <BanknoteIcon size={16} className="text-teal-md" />,
+}
 
 export default function BondCalculator() {
   const [weeklyRent, setWeeklyRent] = useState('')
@@ -113,8 +120,8 @@ export default function BondCalculator() {
 
           {/* Result: Key dates grid */}
           <div className="grid grid-cols-2 gap-3">
-            <DateCard label="Landlord must lodge bond by" date={result.lodgeBy} note="5 days after receiving it (s.32)" icon="📅" />
-            <DateCard label="Estimated bond refund by" date={result.refundDeadline} note="If uncontested (s.38)" icon="💸" />
+            <DateCard label="Landlord must lodge bond by" date={result.lodgeBy} note="5 days after receiving it (s.32)" icon="calendar" />
+            <DateCard label="Estimated bond refund by" date={result.refundDeadline} note="If uncontested (s.38)" icon="banknote" />
           </div>
 
           {/* Result: Important info box */}
@@ -132,16 +139,7 @@ export default function BondCalculator() {
         </div>
       )}
 
-      {/* Footer: Reference note */}
-      <div className="mt-8 pt-6 border-t border-sand-3">
-        <p className="text-[12px] text-ink-4 leading-relaxed">
-          Calculations based on the <em>Residential Tenancies Act 1987 (WA)</em>, sections 32–38.
-          For disputes, contact{' '}
-          <a href="https://www.commerce.wa.gov.au/consumer-protection" target="_blank" rel="noreferrer" className="text-teal underline hover:text-teal-2 transition-colors">
-            Consumer Protection WA
-          </a>.
-        </p>
-      </div>
+      <PageFooter />
     </div>
   )
 }
@@ -150,7 +148,7 @@ export default function BondCalculator() {
 function DateCard({ label, date, note, icon }: { label: string; date: string; note: string; icon: string }) {
   return (
     <div className="card p-4 hover:border-teal-md/20">
-      <div className="text-[16px] mb-1">{icon}</div>
+      <div className="mb-1">{BOND_ICONS[icon] || icon}</div>
       <p className="text-[11px] text-ink-4 mb-1.5 leading-tight">{label}</p>
       <p className="font-serif text-[17px] font-semibold text-ink-2 leading-tight mb-1">{date}</p>
       <p className="text-[11px] text-ink-4">{note}</p>

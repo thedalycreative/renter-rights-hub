@@ -1,6 +1,14 @@
 /* ==== LETTERS PAGE: Template letter generator ==== */
 'use client'
 import { useState } from 'react'
+import { KeyIcon, WrenchIcon, CoinIcon } from '@/components/ui/Icons'
+import PageFooter from '@/components/ui/PageFooter'
+
+const LETTER_ICONS: Record<string, React.ReactNode> = {
+  key: <KeyIcon size={16} />,
+  wrench: <WrenchIcon size={16} />,
+  coin: <CoinIcon size={16} />,
+}
 
 /* ---- Data: Letter templates grounded in WA tenancy law ---- */
 const TEMPLATES = [
@@ -9,7 +17,7 @@ const TEMPLATES = [
     label: 'Decline illegal inspection',
     description: 'For when landlord has given less than 7 days written notice',
     tag: 'Entry & privacy',
-    icon: '🔑',
+    icon: 'key',
     template: (f: Fields) => `${f.tenantName}
 ${f.propertyAddress}
 ${f.date}
@@ -38,7 +46,7 @@ ${f.tenantName}`,
     label: 'Formal repairs request',
     description: 'Request urgent or routine repairs in writing with a deadline',
     tag: 'Repairs',
-    icon: '🔧',
+    icon: 'wrench',
     template: (f: Fields) => `${f.tenantName}
 ${f.propertyAddress}
 ${f.date}
@@ -69,7 +77,7 @@ ${f.tenantName}`,
     label: 'Bond refund request',
     description: 'Request return of bond after vacating',
     tag: 'Bond',
-    icon: '💰',
+    icon: 'coin',
     template: (f: Fields) => `${f.tenantName}
 ${f.propertyAddress}
 ${f.date}
@@ -140,9 +148,19 @@ export default function LettersPage() {
       <div className="mb-7">
         <p className="text-[11px] font-semibold tracking-[0.1em] uppercase text-teal-md mb-2">Tool</p>
         <h1 className="font-serif text-[28px] font-bold text-teal-3 mb-2">Template letters</h1>
-        <p className="text-[14.5px] text-ink-3">
+        <p className="text-[14.5px] text-ink-3 mb-3">
           Pre-filled dispute letters grounded in WA tenancy law. Fill in your details and copy.
         </p>
+        {/* Privacy assurance */}
+        <div className="flex items-center gap-2.5 bg-teal-lt border border-teal/12 rounded-lg px-3.5 py-2.5">
+          <svg width="16" height="16" viewBox="0 0 16 16" fill="none" className="text-teal-md flex-shrink-0">
+            <path d="M8 1.5L3 4v3.5c0 3.5 2 5.5 5 7 3-1.5 5-3.5 5-7V4L8 1.5Z" stroke="currentColor" strokeWidth="1.3" strokeLinejoin="round"/>
+            <path d="M5.5 8l2 2L10.5 6" stroke="currentColor" strokeWidth="1.3" strokeLinecap="round" strokeLinejoin="round"/>
+          </svg>
+          <p className="text-[12px] text-teal-2 leading-snug">
+            <strong className="font-semibold">Your privacy is protected.</strong> Everything runs locally in your browser. No data is saved, stored, or sent anywhere — no databases, no tracking, no advertising.
+          </p>
+        </div>
       </div>
 
       {/* Layout: Two-column grid */}
@@ -164,7 +182,7 @@ export default function LettersPage() {
               >
                 <div className="flex items-start justify-between gap-2">
                   <div className="flex items-center gap-2">
-                    <span className="text-[16px]">{t.icon}</span>
+                    <span className="text-teal-md">{LETTER_ICONS[t.icon] || t.icon}</span>
                     <span className={`text-[13.5px] font-medium ${selected === t.id ? 'text-teal-2' : 'text-ink-2'}`}>
                       {t.label}
                     </span>
@@ -233,6 +251,8 @@ export default function LettersPage() {
           </p>
         </div>
       </div>
+
+      <PageFooter />
     </div>
   )
 }

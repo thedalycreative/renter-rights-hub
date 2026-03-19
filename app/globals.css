@@ -59,9 +59,9 @@
            transition-all duration-200 flex items-center gap-1.5;
   }
 
-  /* Card: Standard white card with subtle hover */
+  /* Card: Warm-toned card with subtle hover */
   .card {
-    @apply bg-white border border-sand-3 rounded-2xl
+    @apply bg-amber-lt/40 border border-sand-3 rounded-2xl
            transition-all duration-300
            hover:shadow-lg hover:shadow-teal/5;
   }

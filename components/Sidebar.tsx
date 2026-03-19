@@ -7,13 +7,33 @@ import { usePathname } from 'next/navigation'
 /* ---- Data: Tools navigation items ---- */
 const TOOLS = [
   {
-    href: '/',
+    href: '/chat',
     label: 'Rights assistant',
     badge: 'AI',
     icon: (
       <svg width="15" height="15" viewBox="0 0 16 16" fill="none">
         <path d="M8 1.5C4.41 1.5 1.5 4.14 1.5 7.4c0 1.66.72 3.16 1.88 4.24L2.5 14.5l3.1-1.4A6.7 6.7 0 0 0 8 13.3c3.59 0 6.5-2.64 6.5-5.9S11.59 1.5 8 1.5Z" stroke="currentColor" strokeWidth="1.3" strokeLinejoin="round"/>
         <path d="M5.5 7.5h5M5.5 10h3" stroke="currentColor" strokeWidth="1.3" strokeLinecap="round"/>
+      </svg>
+    ),
+  },
+  {
+    href: '/tools/checker',
+    label: 'Can they do this?',
+    icon: (
+      <svg width="15" height="15" viewBox="0 0 16 16" fill="none">
+        <path d="M8 1.5L13 4.5V11.5L8 14.5L3 11.5V4.5L8 1.5Z" stroke="currentColor" strokeWidth="1.3" strokeLinejoin="round"/>
+        <path d="M5.5 8l2 2 3-3" stroke="currentColor" strokeWidth="1.3" strokeLinecap="round" strokeLinejoin="round"/>
+      </svg>
+    ),
+  },
+  {
+    href: '/tools/notice-calculator',
+    label: 'Notice calculator',
+    icon: (
+      <svg width="15" height="15" viewBox="0 0 16 16" fill="none">
+        <rect x="2.5" y="3.5" width="11" height="10" rx="1.5" stroke="currentColor" strokeWidth="1.3"/>
+        <path d="M2.5 7h11M5.5 1.5v4M10.5 1.5v4" stroke="currentColor" strokeWidth="1.3" strokeLinecap="round"/>
       </svg>
     ),
   },
@@ -128,26 +148,22 @@ export default function Sidebar() {
   return (
     <aside className="w-[272px] bg-gradient-to-b from-teal-3 via-[#0f3d38] to-teal-3 flex flex-col overflow-hidden flex-shrink-0 border-r border-white/5 shadow-2xl z-10">
 
-      {/* ── Logo area ── */}
-      <div className="relative overflow-hidden border-b border-white/8">
+      {/* ── Logo area — no container, just logo + text ── */}
+      <div className="relative overflow-hidden">
         {/* Decorative glows */}
         <div className="absolute -top-12 -right-12 w-40 h-40 bg-amber/10 rounded-full blur-3xl pointer-events-none" />
         <div className="absolute -bottom-8 -left-8 w-32 h-32 bg-teal/15 rounded-full blur-2xl pointer-events-none" />
 
-        {/* Site logo + name */}
-        <Link href="/" className="flex items-center gap-3.5 px-5 pt-6 pb-4 relative group">
-          {/* Hub logo mark */}
-          <div className="w-11 h-11 rounded-[12px] overflow-hidden flex-shrink-0 shadow-lg shadow-black/30 ring-1 ring-white/10 group-hover:ring-white/20 transition-all duration-300">
-            <Image
-              src="/hub-logo.png"
-              alt="Perth Renter Rights Hub logo"
-              width={44}
-              height={44}
-              className="w-full h-full object-cover"
-              priority
-            />
-          </div>
-          {/* Site name */}
+        {/* Site logo + name — logo without container */}
+        <Link href="/" className="flex items-center gap-3.5 px-5 pt-6 pb-5 relative group">
+          <Image
+            src="/hub-logo.png"
+            alt="Perth Renter Rights Hub logo"
+            width={40}
+            height={40}
+            className="flex-shrink-0 drop-shadow-lg"
+            priority
+          />
           <div>
             <div className="font-serif text-[15.5px] font-bold text-white leading-tight tracking-wide drop-shadow-sm">
               Perth Renter
@@ -161,33 +177,25 @@ export default function Sidebar() {
             </div>
           </div>
         </Link>
-
-        {/* TDC agency credit strip */}
-        <a
-          href="https://thedalycreative.com.au"
-          target="_blank"
-          rel="noreferrer"
-          className="flex items-center gap-2.5 px-5 py-2.5 bg-black/20 border-t border-white/5 hover:bg-black/30 transition-colors duration-200 group"
-        >
-          <div className="w-[42px] h-[18px] relative flex-shrink-0 rounded overflow-hidden">
-            <Image
-              src="/tdc-logo-white.png"
-              alt="The Daly Creative"
-              fill
-              className="object-contain object-left"
-            />
-          </div>
-          <span className="text-[10px] text-white/25 tracking-[0.08em] uppercase font-medium group-hover:text-white/45 transition-colors">
-            A TDC product
-          </span>
-          <svg width="9" height="9" viewBox="0 0 9 9" fill="none" className="ml-auto opacity-20 group-hover:opacity-40 transition-opacity">
-            <path d="M1.5 7.5L7.5 1.5M7.5 1.5H3.5M7.5 1.5V5.5" stroke="currentColor" strokeWidth="1.2" strokeLinecap="round"/>
-          </svg>
-        </a>
       </div>
 
       {/* ── Navigation links ── */}
       <nav className="flex-1 overflow-y-auto py-2 scrollbar-thin">
+
+        {/* Home link */}
+        <div className="px-3 pt-3 pb-1">
+          <NavItem
+            href="/"
+            label="Home"
+            icon={
+              <svg width="15" height="15" viewBox="0 0 16 16" fill="none">
+                <path d="M2.5 8.5V14h4v-3.5a1 1 0 0 1 1-1h1a1 1 0 0 1 1 1V14h4V8.5" stroke="currentColor" strokeWidth="1.3" strokeLinecap="round" strokeLinejoin="round"/>
+                <path d="M1 8l7-6 7 6" stroke="currentColor" strokeWidth="1.3" strokeLinecap="round" strokeLinejoin="round"/>
+              </svg>
+            }
+            active={pathname === '/'}
+          />
+        </div>
 
         <Section label="Tools">
           {TOOLS.map(t => (
@@ -228,16 +236,6 @@ export default function Sidebar() {
 
       </nav>
 
-      {/* ── Legal disclaimer footer ── */}
-      <div className="p-3.5 border-t border-white/8">
-        <div className="bg-white/4 border border-white/7 rounded-[10px] p-3">
-          <p className="text-[11px] text-white/28 leading-relaxed">
-            <strong className="text-white/45 font-semibold">Not legal advice.</strong>{' '}
-            For complex disputes, contact Consumer Protection WA or a community legal centre.
-          </p>
-        </div>
-      </div>
-
     </aside>
   )
 }
@@ -246,7 +244,7 @@ export default function Sidebar() {
 function Section({ label, children }: { label: string; children: React.ReactNode }) {
   return (
     <div className="px-3 pt-5 pb-1">
-      <p className="text-[9.5px] font-bold tracking-[0.14em] uppercase text-white/22 px-2 mb-1.5 select-none">
+      <p className="text-[9.5px] font-bold tracking-[0.14em] uppercase text-white/30 px-2 mb-1.5 select-none">
         {label}
       </p>
       <div className="space-y-0.5">{children}</div>
@@ -270,11 +268,11 @@ function NavItem({
 
   const state = active
     ? 'bg-white/13 text-white shadow-sm'
-    : 'text-white/55 hover:bg-white/7 hover:text-white/90'
+    : 'text-white/60 hover:bg-white/8 hover:text-white'
 
   const iconClass = active
     ? 'text-amber'
-    : 'text-white/40 group-hover:text-white/70 transition-colors'
+    : 'text-white/45 group-hover:text-white/80 transition-colors'
 
   /* Active left-bar indicator */
   const bar = active && (
@@ -284,23 +282,19 @@ function NavItem({
   const inner = (
     <>
       {bar}
-      {/* Icon */}
       <span className={`flex-shrink-0 ${iconClass} transition-colors duration-200`}>
         {icon}
       </span>
-      {/* Label */}
       <span className="flex-1 leading-tight">{label}</span>
-      {/* AI badge */}
       {badge && (
         <span className="bg-gradient-to-r from-amber to-amber-2 text-white text-[9.5px] font-bold px-1.5 py-[2px] rounded-full tracking-wide shadow-sm shadow-amber/30">
           {badge}
         </span>
       )}
-      {/* External arrow */}
       {external && (
         <svg
           width="10" height="10" viewBox="0 0 10 10" fill="none"
-          className="flex-shrink-0 opacity-25 group-hover:opacity-50 transition-opacity"
+          className="flex-shrink-0 opacity-30 group-hover:opacity-60 transition-opacity"
         >
           <path d="M1.5 8.5L8.5 1.5M8.5 1.5H4.5M8.5 1.5V5.5" stroke="currentColor" strokeWidth="1.2" strokeLinecap="round"/>
         </svg>

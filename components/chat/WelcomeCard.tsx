@@ -1,6 +1,7 @@
 /* ==== WELCOME CARD: Landing state for chat — first-timer friendly ==== */
 import Link from 'next/link'
 import Image from 'next/image'
+import { WrenchIcon, KeyIcon, BoxIcon, DollarUpIcon, ClipboardIcon, CoinIcon, HandIcon } from '@/components/ui/Icons'
 
 interface Props {
   onHint: (q: string) => void
@@ -16,10 +17,10 @@ const QUICK_START = [
 
 /* ---- Data: Topic guides ---- */
 const TOPIC_CARDS = [
-  { href: '/topics/repairs',  label: 'Repairs',        icon: '🔧', desc: 'What must be fixed & how to ask', color: 'from-teal-lt to-sand' },
-  { href: '/topics/entry',    label: 'Entry & Privacy', icon: '🔑', desc: 'When can they enter your home?',  color: 'from-amber-lt to-sand' },
-  { href: '/topics/ending',   label: 'Moving Out',      icon: '📦', desc: 'Notice periods & bond returns',   color: 'from-teal-lt to-sand' },
-  { href: '/topics/rent',     label: 'Rent Increases',  icon: '💸', desc: 'Rules around increasing rent',   color: 'from-amber-lt to-sand' },
+  { href: '/topics/repairs',  label: 'Repairs',        icon: <WrenchIcon size={20} className="text-teal-2" />, desc: 'What must be fixed & how to ask', color: 'from-teal-lt to-sand' },
+  { href: '/topics/entry',    label: 'Entry & Privacy', icon: <KeyIcon size={20} className="text-amber-2" />, desc: 'When can they enter your home?',  color: 'from-amber-lt to-sand' },
+  { href: '/topics/ending',   label: 'Moving Out',      icon: <BoxIcon size={20} className="text-teal-2" />, desc: 'Notice periods & bond returns',   color: 'from-teal-lt to-sand' },
+  { href: '/topics/rent',     label: 'Rent Increases',  icon: <DollarUpIcon size={20} className="text-amber-2" />, desc: 'Rules around increasing rent',   color: 'from-amber-lt to-sand' },
 ]
 
 export default function WelcomeCard({ onHint }: Props) {
@@ -60,7 +61,7 @@ export default function WelcomeCard({ onHint }: Props) {
 
         {/* First-timer callout */}
         <div className="bg-gradient-to-r from-teal-lt to-sand border border-teal/15 rounded-xl px-4 py-3 mb-5 flex items-start gap-3">
-          <span className="text-[20px] flex-shrink-0 mt-0.5">👋</span>
+          <span className="flex-shrink-0 mt-0.5 text-teal-md"><HandIcon size={20} /></span>
           <div>
             <p className="text-[13px] font-semibold text-teal-2 mb-0.5">First time renting?</p>
             <p className="text-[12.5px] text-ink-3 leading-relaxed">
@@ -91,7 +92,7 @@ export default function WelcomeCard({ onHint }: Props) {
               className={`card p-4 bg-gradient-to-br ${card.color} hover:border-teal-md/30 hover:shadow-md hover:shadow-teal/5 transition-all duration-300 group animate-fade-in`}
               style={{ animationDelay: `${i * 0.07}s` }}
             >
-              <div className="text-[22px] mb-2">{card.icon}</div>
+              <div className="mb-2">{card.icon}</div>
               <p className="font-semibold text-[14px] text-ink-2 mb-1 group-hover:text-teal-2 transition-colors">{card.label}</p>
               <p className="text-[12px] text-ink-4 leading-snug">{card.desc}</p>
               <div className="mt-3 flex items-center gap-1 text-[11.5px] text-teal-md opacity-0 group-hover:opacity-100 transition-opacity">
@@ -110,16 +111,16 @@ export default function WelcomeCard({ onHint }: Props) {
         <p className="text-[11px] font-semibold tracking-[0.08em] uppercase text-ink-4 mb-3">Key numbers to know</p>
         <div className="grid grid-cols-3 gap-3">
           {[
-            { num: '7',  unit: 'days',   label: 'notice for inspection', icon: '📋' },
-            { num: '4×', unit: 'per yr', label: 'max inspections',        icon: '🔑' },
-            { num: '60', unit: 'days',   label: 'notice for rent rise',   icon: '💰' },
+            { num: '7',  unit: 'days',   label: 'notice for inspection', icon: <ClipboardIcon size={16} className="text-teal-md" /> },
+            { num: '4×', unit: 'per yr', label: 'max inspections',        icon: <KeyIcon size={16} className="text-teal-md" /> },
+            { num: '60', unit: 'days',   label: 'notice for rent rise',   icon: <CoinIcon size={16} className="text-teal-md" /> },
           ].map((s, i) => (
             <div
               key={s.num}
               className="bg-gradient-to-br from-sand to-sand-2 border border-sand-3 rounded-[12px] px-3.5 py-3 group hover:border-teal-md/30 hover:shadow-sm transition-all duration-300 animate-fade-in"
               style={{ animationDelay: `${i * 0.1}s` }}
             >
-              <div className="text-[16px] mb-1.5">{s.icon}</div>
+              <div className="mb-1.5">{s.icon}</div>
               <div className="font-serif text-[22px] font-bold text-teal-2 leading-none mb-1">
                 {s.num}<span className="text-[11px] font-sans font-normal text-ink-4 ml-1">{s.unit}</span>
               </div>

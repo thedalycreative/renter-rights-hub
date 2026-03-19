@@ -1,6 +1,7 @@
 /* ==== TOPIC PAGE: Reusable plain-English guide layout ==== */
 import Image from 'next/image'
 import Link from 'next/link'
+import PageFooter from '@/components/ui/PageFooter'
 
 /* ---- Types ---- */
 export interface Step {
@@ -60,7 +61,9 @@ export default function TopicPage({
       {/* ── "How it works" steps ── */}
       <div className="mb-10">
         <h2 className="font-serif text-[19px] font-bold text-teal-2 mb-5 flex items-center gap-2">
-          <span className="w-6 h-6 bg-teal text-white rounded-full text-[11px] flex items-center justify-center font-bold flex-shrink-0">✓</span>
+          <span className="w-6 h-6 bg-teal text-white rounded-full flex items-center justify-center flex-shrink-0">
+            <svg width="12" height="12" viewBox="0 0 12 12" fill="none"><path d="M2.5 6l3 3L9.5 3" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"/></svg>
+          </span>
           Your rights, step by step
         </h2>
 
@@ -81,7 +84,7 @@ export default function TopicPage({
                   {step.tip && (
                     <div className="mt-3 bg-amber-lt border border-amber/20 rounded-[8px] px-3.5 py-2.5">
                       <p className="text-[12.5px] text-amber-2 leading-relaxed">
-                        <strong className="font-semibold">💡 Tip: </strong>{step.tip}
+                        <strong className="font-semibold">Tip: </strong>{step.tip}
                       </p>
                     </div>
                   )}
@@ -96,7 +99,9 @@ export default function TopicPage({
       {faqs.length > 0 && (
         <div className="mb-10">
           <h2 className="font-serif text-[19px] font-bold text-teal-2 mb-5 flex items-center gap-2">
-            <span className="w-6 h-6 bg-amber text-white rounded-full text-[11px] flex items-center justify-center font-bold flex-shrink-0">?</span>
+            <span className="w-6 h-6 bg-amber text-white rounded-full flex items-center justify-center flex-shrink-0">
+              <svg width="12" height="12" viewBox="0 0 12 12" fill="none"><path d="M4.5 4.5a1.5 1.5 0 0 1 2.7.9c0 .9-1.5 1.2-1.5 2.1" stroke="currentColor" strokeWidth="1.3" strokeLinecap="round"/><circle cx="6" cy="9" r=".5" fill="currentColor"/></svg>
+            </span>
             Common questions
           </h2>
           <div className="space-y-3">
@@ -150,23 +155,7 @@ export default function TopicPage({
         </div>
       </div>
 
-      {/* ── Footer: TDC branding ── */}
-      <div className="mt-8 pt-6 border-t border-sand-3 flex items-center justify-between">
-        <p className="text-[12px] text-ink-4 leading-relaxed">
-          Guides based on the <em>Residential Tenancies Act 1987 (WA)</em>.
-        </p>
-        <p className="text-[11px] text-ink-4/60 whitespace-nowrap ml-4">
-          by{' '}
-          <a
-            href="https://thedalycreative.com.au"
-            target="_blank"
-            rel="noreferrer"
-            className="text-teal/60 hover:text-teal transition-colors underline underline-offset-2"
-          >
-            TDC
-          </a>
-        </p>
-      </div>
+      <PageFooter />
     </div>
   )
 }
