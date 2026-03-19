@@ -1,0 +1,17 @@
+{
+  "framework": "nextjs",
+  "buildCommand": "next build",
+  "devCommand": "next dev",
+  "installCommand": "npm install",
+  "env": {
+    "ANTHROPIC_API_KEY": "@anthropic-api-key",
+    "VOYAGE_API_KEY": "@voyage-api-key",
+    "PINECONE_API_KEY": "@pinecone-api-key",
+    "PINECONE_INDEX": "@pinecone-index"
+  },
+  "functions": {
+    "app/api/ask/route.ts": {
+      "maxDuration": 30
+    }
+  }
+}

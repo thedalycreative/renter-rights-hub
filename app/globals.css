@@ -1,0 +1,41 @@
+@import url('https://fonts.googleapis.com/css2?family=Lora:ital,wght@0,400;0,600;1,400&family=DM+Mono:wght@400;500&family=DM+Sans:wght@300;400;500&display=swap');
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  html { @apply bg-sand text-ink font-sans; }
+
+  /* Scrollbar */
+  ::-webkit-scrollbar       { width: 5px; }
+  ::-webkit-scrollbar-track { background: transparent; }
+  ::-webkit-scrollbar-thumb { @apply bg-sand-3 rounded-full; }
+}
+
+@layer components {
+  .cite-pill {
+    @apply font-mono text-[11.5px] bg-teal-lt text-teal-2
+           px-[7px] py-[2px] rounded-[5px]
+           border border-teal/15 whitespace-nowrap;
+  }
+  .source-pill {
+    @apply font-mono text-[11px] bg-sand-2 text-ink-3
+           border border-sand-3 px-2 py-[2px] rounded-[5px];
+  }
+  .followup-chip {
+    @apply bg-white border border-sand-3 text-teal-2
+           text-[12.5px] px-[13px] py-[6px] rounded-full
+           cursor-pointer transition-colors
+           hover:border-teal-md hover:bg-teal-lt;
+  }
+  .btn-primary {
+    @apply bg-teal text-white text-[13px] px-4 py-[7px]
+           rounded-[10px] border border-teal-2
+           hover:bg-teal-2 transition-colors flex items-center gap-1.5;
+  }
+  .btn-ghost {
+    @apply bg-transparent text-ink-3 text-[13px] px-4 py-[7px]
+           rounded-[10px] border border-sand-3
+           hover:bg-sand-2 transition-colors flex items-center gap-1.5;
+  }
+}
