@@ -1,41 +1,111 @@
-@import url('https://fonts.googleapis.com/css2?family=Lora:ital,wght@0,400;0,600;1,400&family=DM+Mono:wght@400;500&family=DM+Sans:wght@300;400;500&display=swap');
+/* ==== FONT IMPORT ==== */
+@import url('https://fonts.googleapis.com/css2?family=Lora:ital,wght@0,400;0,600;0,700;1,400&family=DM+Mono:wght@400;500&family=DM+Sans:wght@300;400;500;600&display=swap');
+
+/* ==== TAILWIND LAYERS ==== */
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
 
+/* ---- Base: Global resets & defaults ---- */
 @layer base {
-  html { @apply bg-sand text-ink font-sans; }
+  html { @apply bg-sand text-ink font-sans scroll-smooth; }
 
-  /* Scrollbar */
+  /* Scrollbar: Thin, teal-tinted */
   ::-webkit-scrollbar       { width: 5px; }
   ::-webkit-scrollbar-track { background: transparent; }
-  ::-webkit-scrollbar-thumb { @apply bg-sand-3 rounded-full; }
+  ::-webkit-scrollbar-thumb { @apply bg-sand-3 rounded-full hover:bg-teal-md/40; }
 }
 
+/* ---- Components: Reusable UI classes ---- */
 @layer components {
+  /* Citation pill: Inline law section references */
   .cite-pill {
     @apply font-mono text-[11.5px] bg-teal-lt text-teal-2
            px-[7px] py-[2px] rounded-[5px]
-           border border-teal/15 whitespace-nowrap;
+           border border-teal/15 whitespace-nowrap
+           transition-colors hover:bg-teal/10;
   }
+
+  /* Source pill: Metadata tags for message sources */
   .source-pill {
     @apply font-mono text-[11px] bg-sand-2 text-ink-3
-           border border-sand-3 px-2 py-[2px] rounded-[5px];
+           border border-sand-3 px-2 py-[2px] rounded-[5px]
+           transition-colors hover:border-teal-md/40;
   }
+
+  /* Follow-up chip: Clickable suggestion buttons */
   .followup-chip {
     @apply bg-white border border-sand-3 text-teal-2
            text-[12.5px] px-[13px] py-[6px] rounded-full
-           cursor-pointer transition-colors
-           hover:border-teal-md hover:bg-teal-lt;
+           cursor-pointer transition-all duration-200
+           hover:border-teal-md hover:bg-teal-lt hover:shadow-sm
+           active:scale-[0.97];
   }
+
+  /* Primary button: Teal filled */
   .btn-primary {
     @apply bg-teal text-white text-[13px] px-4 py-[7px]
            rounded-[10px] border border-teal-2
-           hover:bg-teal-2 transition-colors flex items-center gap-1.5;
+           hover:bg-teal-2 active:scale-[0.97]
+           transition-all duration-200 flex items-center gap-1.5
+           shadow-sm hover:shadow-md hover:shadow-teal/10;
   }
+
+  /* Ghost button: Outlined neutral */
   .btn-ghost {
     @apply bg-transparent text-ink-3 text-[13px] px-4 py-[7px]
            rounded-[10px] border border-sand-3
-           hover:bg-sand-2 transition-colors flex items-center gap-1.5;
+           hover:bg-sand-2 hover:border-sand-3 active:scale-[0.97]
+           transition-all duration-200 flex items-center gap-1.5;
   }
+
+  /* Card: Standard white card with subtle hover */
+  .card {
+    @apply bg-white border border-sand-3 rounded-2xl
+           transition-shadow duration-300
+           hover:shadow-lg hover:shadow-teal/5;
+  }
+
+  /* Glass panel: Frosted glass effect for overlays */
+  .glass {
+    @apply bg-white/70 backdrop-blur-xl border border-white/20;
+  }
+}
+
+/* ---- Utilities: Animations & effects ---- */
+@layer utilities {
+  /* Fade-in from below */
+  .animate-fade-in {
+    animation: fadeIn 0.5s ease-out forwards;
+  }
+  .animate-fade-in-delay {
+    animation: fadeIn 0.5s ease-out 0.15s forwards;
+    opacity: 0;
+  }
+
+  /* Slide up entrance */
+  .animate-slide-up {
+    animation: slideUp 0.4s ease-out forwards;
+  }
+
+  /* Subtle pulse glow for active states */
+  .animate-glow {
+    animation: glow 2s ease-in-out infinite alternate;
+  }
+}
+
+/* ---- Keyframes ---- */
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(8px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+
+@keyframes slideUp {
+  from { opacity: 0; transform: translateY(16px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+
+@keyframes glow {
+  from { box-shadow: 0 0 8px rgba(26, 92, 84, 0.08); }
+  to   { box-shadow: 0 0 20px rgba(26, 92, 84, 0.15); }
 }

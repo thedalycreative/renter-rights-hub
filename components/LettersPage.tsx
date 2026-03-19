@@ -1,12 +1,15 @@
+/* ==== LETTERS PAGE: Template letter generator ==== */
 'use client'
 import { useState } from 'react'
 
+/* ---- Data: Letter templates grounded in WA tenancy law ---- */
 const TEMPLATES = [
   {
     id: 'inspection-notice',
     label: 'Decline illegal inspection',
     description: 'For when landlord has given less than 7 days written notice',
     tag: 'Entry & privacy',
+    icon: '🔑',
     template: (f: Fields) => `${f.tenantName}
 ${f.propertyAddress}
 ${f.date}
@@ -35,6 +38,7 @@ ${f.tenantName}`,
     label: 'Formal repairs request',
     description: 'Request urgent or routine repairs in writing with a deadline',
     tag: 'Repairs',
+    icon: '🔧',
     template: (f: Fields) => `${f.tenantName}
 ${f.propertyAddress}
 ${f.date}
@@ -65,6 +69,7 @@ ${f.tenantName}`,
     label: 'Bond refund request',
     description: 'Request return of bond after vacating',
     tag: 'Bond',
+    icon: '💰',
     template: (f: Fields) => `${f.tenantName}
 ${f.propertyAddress}
 ${f.date}
@@ -88,6 +93,7 @@ ${f.tenantName}`,
   },
 ]
 
+/* ---- Types: Form field values ---- */
 interface Fields {
   tenantName: string
   propertyAddress: string
@@ -105,21 +111,19 @@ const today = new Date().toLocaleDateString('en-AU', { day: 'numeric', month: 'l
 export default function LettersPage() {
   const [selected, setSelected] = useState(TEMPLATES[0].id)
   const [fields, setFields] = useState<Fields>({
-    tenantName: '',
-    propertyAddress: '',
-    landlordName: '',
-    landlordAddress: '',
-    date: today,
+    tenantName: '', propertyAddress: '', landlordName: '', landlordAddress: '', date: today,
   })
   const [copied, setCopied] = useState(false)
 
   const template = TEMPLATES.find(t => t.id === selected)!
   const letter = template.template(fields)
 
+  /* Update a single field */
   function update(key: keyof Fields, value: string) {
     setFields(prev => ({ ...prev, [key]: value }))
   }
 
+  /* Copy letter text to clipboard */
   async function copyLetter() {
     await navigator.clipboard.writeText(letter)
     setCopied(true)
@@ -131,52 +135,58 @@ export default function LettersPage() {
   const needsBond           = selected === 'bond-claim'
 
   return (
-    <div className="max-w-4xl mx-auto px-7 py-10">
-      {/* Header */}
+    <div className="max-w-4xl mx-auto px-7 py-10 animate-fade-in">
+      {/* Header: Page title */}
       <div className="mb-7">
-        <p className="text-[11px] font-medium tracking-[0.08em] uppercase text-ink-4 mb-1.5">Tool</p>
-        <h1 className="font-serif text-[26px] font-semibold text-teal-2 mb-2">Template letters</h1>
-        <p className="text-[14px] text-ink-3">
+        <p className="text-[11px] font-semibold tracking-[0.1em] uppercase text-teal-md mb-2">Tool</p>
+        <h1 className="font-serif text-[28px] font-bold text-teal-3 mb-2">Template letters</h1>
+        <p className="text-[14.5px] text-ink-3">
           Pre-filled dispute letters grounded in WA tenancy law. Fill in your details and copy.
         </p>
       </div>
 
+      {/* Layout: Two-column grid */}
       <div className="grid grid-cols-[1fr_1.4fr] gap-6">
-        {/* Left: template selector + fields */}
+
+        {/* Left column: Template selector + form fields */}
         <div className="space-y-5">
-          {/* Template picker */}
+          {/* Template picker cards */}
           <div className="space-y-2">
             {TEMPLATES.map(t => (
               <button
                 key={t.id}
                 onClick={() => setSelected(t.id)}
-                className={`w-full text-left border rounded-xl px-4 py-3.5 transition-all ${
+                className={`w-full text-left border rounded-xl px-4 py-3.5 transition-all duration-200 group ${
                   selected === t.id
-                    ? 'bg-teal-lt border-teal-md'
-                    : 'bg-white border-sand-3 hover:border-sand-3'
+                    ? 'bg-teal-lt border-teal-md shadow-md shadow-teal/5'
+                    : 'bg-white border-sand-3 hover:border-teal-md/30 hover:shadow-sm'
                 }`}
               >
                 <div className="flex items-start justify-between gap-2">
-                  <span className={`text-[13.5px] font-medium ${selected === t.id ? 'text-teal-2' : 'text-ink-2'}`}>
-                    {t.label}
-                  </span>
+                  <div className="flex items-center gap-2">
+                    <span className="text-[16px]">{t.icon}</span>
+                    <span className={`text-[13.5px] font-medium ${selected === t.id ? 'text-teal-2' : 'text-ink-2'}`}>
+                      {t.label}
+                    </span>
+                  </div>
                   <span className="text-[10px] bg-sand border border-sand-3 text-ink-4 px-2 py-[2px] rounded-full flex-shrink-0 mt-0.5">
                     {t.tag}
                   </span>
                 </div>
-                <p className="text-[12px] text-ink-4 mt-0.5">{t.description}</p>
+                <p className="text-[12px] text-ink-4 mt-1 pl-7">{t.description}</p>
               </button>
             ))}
           </div>
 
-          {/* Fields */}
-          <div className="bg-white border border-sand-3 rounded-xl p-5 space-y-4">
-            <p className="text-[12px] font-medium text-ink-3 uppercase tracking-wide">Your details</p>
-            <Field label="Your full name"       value={fields.tenantName}       onChange={v => update('tenantName', v)} />
-            <Field label="Property address"     value={fields.propertyAddress}  onChange={v => update('propertyAddress', v)} />
-            <Field label="Landlord / agent name" value={fields.landlordName}   onChange={v => update('landlordName', v)} />
+          {/* Form: Your details */}
+          <div className="card p-5 space-y-4">
+            <p className="text-[12px] font-semibold text-ink-3 uppercase tracking-[0.08em]">Your details</p>
+            <Field label="Your full name"          value={fields.tenantName}      onChange={v => update('tenantName', v)} />
+            <Field label="Property address"        value={fields.propertyAddress} onChange={v => update('propertyAddress', v)} />
+            <Field label="Landlord / agent name"   value={fields.landlordName}    onChange={v => update('landlordName', v)} />
             <Field label="Landlord / agent address" value={fields.landlordAddress} onChange={v => update('landlordAddress', v)} />
 
+            {/* Conditional fields based on selected template */}
             {needsInspectionDate && (
               <Field label="Date of proposed inspection" value={fields.inspectionDate ?? ''} onChange={v => update('inspectionDate', v)} />
             )}
@@ -185,34 +195,39 @@ export default function LettersPage() {
             )}
             {needsBond && (
               <>
-                <Field label="Vacate date"   value={fields.vacateDate ?? ''}   onChange={v => update('vacateDate', v)} />
-                <Field label="Bond amount ($)" value={fields.bondAmount ?? ''} onChange={v => update('bondAmount', v)} />
+                <Field label="Vacate date"     value={fields.vacateDate ?? ''}  onChange={v => update('vacateDate', v)} />
+                <Field label="Bond amount ($)"  value={fields.bondAmount ?? ''}  onChange={v => update('bondAmount', v)} />
               </>
             )}
           </div>
         </div>
 
-        {/* Right: letter preview */}
+        {/* Right column: Letter preview */}
         <div className="flex flex-col">
+          {/* Preview: Header + copy button */}
           <div className="flex items-center justify-between mb-3">
             <p className="text-[13px] font-medium text-ink-3">Letter preview</p>
             <button
               onClick={copyLetter}
-              className={`text-[12.5px] px-3.5 py-1.5 rounded-[8px] border transition-all ${
+              className={`text-[12.5px] px-3.5 py-1.5 rounded-[8px] border transition-all duration-200 ${
                 copied
-                  ? 'bg-teal-lt border-teal-md text-teal-2'
-                  : 'bg-white border-sand-3 text-ink-3 hover:border-teal-md hover:text-teal-2'
+                  ? 'bg-teal-lt border-teal-md text-teal-2 shadow-sm'
+                  : 'bg-white border-sand-3 text-ink-3 hover:border-teal-md hover:text-teal-2 hover:shadow-sm'
               }`}
             >
-              {copied ? 'Copied!' : 'Copy letter'}
+              {copied ? '✓ Copied!' : 'Copy letter'}
             </button>
           </div>
-          <div className="bg-white border border-sand-3 rounded-xl p-6 flex-1 overflow-y-auto">
+
+          {/* Preview: Letter content */}
+          <div className="card p-6 flex-1 overflow-y-auto">
             <pre className="font-sans text-[13px] text-ink-2 leading-relaxed whitespace-pre-wrap">{letter}</pre>
           </div>
+
+          {/* Preview: Footer disclaimer */}
           <p className="text-[11.5px] text-ink-4 mt-3 leading-relaxed">
             Review before sending. For complex disputes, consider getting advice from a community legal centre or{' '}
-            <a href="https://tenancywa.org.au" target="_blank" rel="noreferrer" className="text-teal underline">
+            <a href="https://tenancywa.org.au" target="_blank" rel="noreferrer" className="text-teal underline hover:text-teal-2 transition-colors">
               Tenancy WA
             </a>.
           </p>
@@ -222,13 +237,14 @@ export default function LettersPage() {
   )
 }
 
+/* ---- Field: Reusable form input sub-component ---- */
 function Field({ label, value, onChange, textarea }: {
   label: string; value: string; onChange: (v: string) => void; textarea?: boolean
 }) {
-  const cls = "w-full border border-sand-3 rounded-[8px] px-3 py-2 text-[13.5px] text-ink outline-none focus:border-teal-md focus:ring-2 focus:ring-teal/8 transition-all placeholder:text-ink-4"
+  const cls = "w-full border border-sand-3 rounded-[8px] px-3 py-2.5 text-[13.5px] text-ink outline-none focus:border-teal-md focus:ring-2 focus:ring-teal/8 transition-all duration-200 placeholder:text-ink-4"
   return (
     <div>
-      <label className="block text-[12px] text-ink-4 mb-1">{label}</label>
+      <label className="block text-[12px] text-ink-4 mb-1.5 font-medium">{label}</label>
       {textarea
         ? <textarea value={value} onChange={e => onChange(e.target.value)} rows={3} className={`${cls} resize-none`} />
         : <input value={value} onChange={e => onChange(e.target.value)} className={cls} />
